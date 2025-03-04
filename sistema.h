@@ -8,11 +8,14 @@
 
 
 typedef struct Produto TProduto, *PProduto;
+typedef struct Venda TVenda, *PVenda;
 
 void  cadastro_de_produto();
 void  lista_do_estoque();
 void registro_de_compra();
 void registro_de_venda();
+float saida_do_estoque();
+void lista_de_vendas();
 
 
 #endif
