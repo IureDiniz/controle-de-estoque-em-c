@@ -5,5 +5,8 @@ compile:
 clean:
 	rm arquivos/compras.bin
 
-execute: compile
+execute:
+		./a.out
+
+compile-execute: compile
 		 ./a.out

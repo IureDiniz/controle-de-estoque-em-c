@@ -1,5 +1,7 @@
 #include "sistema.h"
 
+
+// 64 bits
 struct Produto{
     char nome[50];
     int id;
@@ -7,16 +9,26 @@ struct Produto{
     int qtd;
 };
 
+long arquivo_tamanho(const char *arq) {
+    struct stat st;
+    if (stat(arq, &st) != 0) {
+        perror("Erro ao obter informações do arquivo");
+        return -1; // Erro ao obter as informações do arquivo
+    }
+    return st.st_size;
+}
+
 void  cadastro_de_produto(){
     FILE *arq = fopen("arquivos/produtos.bin","ab");
-    
+    long arq_tamanho = arquivo_tamanho("arquivos/produtos.bin");
+
     if(!arq){
         printf("Erro ao abrir arquivo de estoque!\n");
         return;
     }else{
+        
         TProduto p;
-        printf("ID: ");
-        scanf(" %d", &p.id);
+        p.id = (arq_tamanho/sizeof(TProduto)) + 1;
         printf("Nome: ");
         scanf(" %s", p.nome);
         printf("Quantidade: ");
