@@ -6,7 +6,7 @@ int main(){
    int opcao;
    
    do{
-        printf("\n1. Cadastrar Produto\n2. Listar Estoque\n3. Registrar Compra\n4. Listar Compras\n5. Registrar Venda\n6. Listar Vendas\n7. Sair\nEscolha: ");
+        printf("\n1. Cadastrar Produto\n2. Listar Estoque\n3. Registrar Compra\n4. Registrar Venda\n5. Sair\nEscolha: ");
         scanf("%d", &opcao);
         
         switch(opcao){
@@ -20,21 +20,19 @@ int main(){
                 registro_de_compra();
                 break;
             case 4:
-                lista_de_compras();
-                break;
-            case 5:
                 registro_de_venda();
                 break;
-            case 6:
-                lista_de_vendas();
-                break;
-            case 7:
-                printf("Saindo...\n");
+            case 5:
+                printf("\n----------------------------------------------------------------------------------------------------------------------------------------\n");
+                printf("Saindo...");
+                printf("\n----------------------------------------------------------------------------------------------------------------------------------------\n");
                 break;
             default:
-                printf("Opção inválida!\n");
+                printf("\n----------------------------------------------------------------------------------------------------------------------------------------\n");
+                printf("Opção inválida!");
+                printf("\n----------------------------------------------------------------------------------------------------------------------------------------\n");
         }
-   }while(opcao != 7);
+   }while(opcao != 5);
    
     return 0;
 }
