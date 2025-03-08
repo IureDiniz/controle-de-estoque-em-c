@@ -34,7 +34,9 @@ void  cadastro_de_produto(){
     long arq_tamanho = arquivo_tamanho("arquivos/produtos.bin");
 
     if(!arq){
+        printf("----------------------------------------------------------------------------------------------------\n");
         printf("Erro ao abrir arquivo de estoque!\n");
+        printf("----------------------------------------------------------------------------------------------------\n");
         return;
     }else{
         
@@ -44,12 +46,14 @@ void  cadastro_de_produto(){
         scanf(" %s", p.nome);
         printf("Quantidade: ");
         scanf(" %d", &p.qtd);
-        printf("Preço: ");
+        printf("Preco: ");
         scanf(" %f", &p.preco);
 
         fwrite(&p, sizeof(TProduto), 1, arq);
         fclose(arq);
+        printf("----------------------------------------------------------------------------------------------------\n");
         printf("Produto cadastrado com sucesso!\n");
+        printf("----------------------------------------------------------------------------------------------------\n");
     }
 }
 
@@ -58,15 +62,17 @@ void  lista_do_estoque(){
     long arq_tamanho = arquivo_tamanho("arquivos/produtos.bin");
 
     if(!arq || arq_tamanho == 0){
+        printf("----------------------------------------------------------------------------------------------------\n");
         printf("Nenhum produto no estoque!\n");
+        printf("----------------------------------------------------------------------------------------------------\n");
         return;
     }
     
     TProduto p;
     printf("----------------------------------------------------------------------------------------------------");
-    printf("\nLista de Produtos em estoque:\n");
+    printf("\nLista de Produtos em Estoque:\n");
     while(fread(&p, sizeof(TProduto),1,arq)){
-        printf("ID: %-5d\t Nome: %-25s\t Quantidade: %-5d\t Preço: %-7.2f\n",p.id,p.nome,p.qtd,p.preco);
+        printf("ID: %-5d\t Nome: %-25s\t Quantidade: %-5d\t Preco: %-7.2f\n",p.id,p.nome,p.qtd,p.preco);
     }
     printf("----------------------------------------------------------------------------------------------------\n");
     fclose(arq);
@@ -97,7 +103,9 @@ void registro_de_compra(){
 
 float entrada_no_estoque(){
       FILE *arq = fopen("arquivos/produtos.bin", "rb+");
-    if (!arq) {
+      long arq_tamanho = arquivo_tamanho("arquivos/produtos.bin");
+
+    if (!arq || arq_tamanho == 0) {
         printf("Nenhum produto em estoque!\n");
         return -1;
     }
@@ -116,12 +124,16 @@ float entrada_no_estoque(){
             fseek(arq, -sizeof(TProduto),SEEK_CUR);
             fwrite(&p,sizeof(TProduto),1,arq);
             fclose(arq);
-            printf("Compra registrada!\nNovo estoque: %d\n",p.qtd);
-            return total;
+            printf("----------------------------------------------------------------------------------------------------");
+            printf("\nCompra registrada!\nNova quantidade no estoque: %d\n",p.qtd);
+            printf("----------------------------------------------------------------------------------------------------");
+            return;
         }
     }
     fclose(arq);
-    printf("Produto não encontrado!\n");
+    printf("----------------------------------------------------------------------------------------------------");
+    printf("\nProduto nao encontrado!\n");
+    printf("----------------------------------------------------------------------------------------------------");
 }
 
 void lista_de_compras(){
@@ -180,9 +192,11 @@ void registro_de_venda(){
 float saida_do_estoque(){
     FILE *arq;
     arq = fopen("arquivos/produtos.bin","rb+");
-    if(!arq){
-        printf("Nenhum produto no estoque!\n");
-        return -1;
+    long arq_tamanho = arquivo_tamanho("arquivos/produtos.bin");
+
+    if(!arq || arq_tamanho == 0){
+        printf("\nNenhum produto no estoque!\n");
+        return;
     }
     
     float total = 0;
@@ -201,8 +215,9 @@ float saida_do_estoque(){
                 fseek(arq, -sizeof(TProduto), SEEK_CUR);
                 fwrite(&p,sizeof(TProduto),1,arq);
                 fclose(arq);
+                printf("Venda registrada com sucesso!\nNovo estoque: %d\n",p.qtd);
             }else{
-                printf("\nESTOQUE INSUFICIENTE!\n\n");
+                printf("Estoque innsuficiente!\n");
                 fclose(arq);
             }
             return total;
@@ -210,24 +225,5 @@ float saida_do_estoque(){
     }
     fclose(arq);
     printf("Produto não encontrado!\n");
-    return 0;
-}
-
-void lista_de_vendas(){
-    FILE *arq = fopen("arquivos/vendas.bin", "rb");
-    long arq_tamanho = arquivo_tamanho("arquivos/vendas.bin");
-
-    if(!arq || arq_tamanho == 0){
-        printf("Nenhuma venda realizada!\n");
-        return;
-    }
-    
-    TVenda v;
-    printf("----------------------------------------------------------------------------------------------------");
-    printf("\nLista de Vendas:\n");
-    while(fread(&v, sizeof(TVenda),1,arq)){
-        printf("ID: %-5d\t Cliente: %-15s\t Preço: %-7.2f\n",v.id, v.cliente, v.preco);
-    }
-    printf("----------------------------------------------------------------------------------------------------\n");
-    fclose(arq);
+        
 }
