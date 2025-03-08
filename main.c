@@ -3,9 +3,10 @@
 
 
 int main(){
-   int opcao;
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+    int opcao;
    
-   do{
+    do{
         printf("\n1. Cadastrar Produto\n2. Listar Estoque\n3. Registrar Compra\n4. Registrar Venda\n5. Sair\nEscolha: ");
         scanf("%d", &opcao);
         
