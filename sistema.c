@@ -142,11 +142,13 @@ void registro_de_venda(){
                 linha();
                 printf("Venda registrada com sucesso!\nNovo estoque: %d\n",p.qtd);
                 linha();
+                return;
             }else{
                 linha();
                 printf("Estoque insuficiente!\n");
                 linha();
                 fclose(arq);
+                return;
             }
         }
     }
